@@ -66,7 +66,7 @@ xml2lua.parser({handler})                                       *xml2lua.parser*
         (xml2lua.XmlParser)  XmlParser object used to parse the XML
 
     See: ~
-        |XmlParser|
+        |xml2lua.XmlParser|
 
 
 xml2lua.printable({tb})                                      *xml2lua.printable*
@@ -120,15 +120,30 @@ xml2lua.parseTableToXml()                              *xml2lua.parseTableToXml*
 
 xml2lua.toXml()                                                  *xml2lua.toXml*
 
-
     Returns: ~
         (string)  String representing the table content in XML
+
+
+xml2lua.handler                                                *xml2lua.handler*
+
+    Fields: ~
+        {parseAttributes}  (boolean)
+        {starttag}         (fun(self:xml2lua.handler,tag:{name:string,attrs:table},s:number,e:number))
+        {endtag}           (fun(self:xml2lua.handler,tag:{name:string,attrs:table},s:number,e:number))
+        {text}             (fun(self:xml2lua.handler,text:string,next?:function,s:number,e:number))
+        {cdata}            (fun(self:xml2lua.handler,cdata:string,next?:function,s:number,e:number))
+        {comment}          (fun(self:xml2lua.handler,cdata:string,next?:function,s:number,e:number))
+        {decl}             (fun(self:xml2lua.handler,tag:{name:string,attrs:table},s:number,e:number))
+        {pi}               (fun(self:xml2lua.handler,tag:{name:string,attrs:table},s:number,e:number))
+        {dtd}              (fun(self:xml2lua.handler,tag:{name:string,attrs:table},s:number,e:number))
 
 
 xml2lua.XmlParser.options                            *xml2lua.XmlParser.options*
 
     Fields: ~
-        {stripWS}  (boolean)
+        {stripWS?}         (boolean)
+        {expandEntities?}  (boolean)
+        {errorHandler?}    (function)
 
 
 xml2lua.XmlParser.xmlTag                              *xml2lua.XmlParser.xmlTag*
@@ -141,8 +156,8 @@ xml2lua.XmlParser.xmlTag                              *xml2lua.XmlParser.xmlTag*
         {errEnd?}    (integer)
         {extStart?}  (integer)
         {extEnd?}    (integer)
-        {endt1?}     (string)
-        {endt2?}     (string)
+        {endt1?}     (string)   EndTag1 ?
+        {endt2?}     (string)   EndTag2 ?
         {tagstr?}    (string)
         {text?}      (string)
 
@@ -159,11 +174,11 @@ XmlParser.new({_handler}, {_options})                            *XmlParser.new*
     Instantiates a XmlParser object.
 
     Parameters: ~
-        {_handler}  (xml2lua.handler)  Handler module to be used to convert the XML string
-                                                      to another formats. See the available handlers at the handler directory.
-                                                      Usually you get an instance to a handler module using, for instance:
-                                                      local handler = require("xmlhandler/tree").
-        {_options}  ({})               Options for this XmlParser instance.
+        {_handler}  (xml2lua.handler)            Handler module to be used to convert the XML string
+                                                 to another formats. See the available handlers at the handler directory.
+                                                 Usually you get an instance to a handler module using, for instance:
+                                                 local handler = require("xmlhandler/tree").
+        {_options}  (xml2lua.XmlParser.options)  Options for this XmlParser instance.
 
     Returns: ~
         (xml2lua.XmlParser)
@@ -172,114 +187,14 @@ XmlParser.new({_handler}, {_options})                            *XmlParser.new*
         |XmlParser.options|
 
 
-XmlParser:parse()                                              *XmlParser:parse*
-           If omitted, the default value is true.
-
-
-dom:new()                                                              *dom:new*
-    Instantiates a new handler object.
-     Each instance can handle a single XML.
-     By using such a constructor, you can parse
-     multiple XML files in the same application.
-     @return xml2lua.handler the handler instance
-
-
-dom:starttag()                                                    *dom:starttag*
-
-
-dom:endtag()                                                        *dom:endtag*
-
-
-dom:text()                                                            *dom:text*
-
-
-dom:comment()                                                      *dom:comment*
-
-
-dom:pi()                                                                *dom:pi*
-
-
-dom:decl()                                                            *dom:decl*
-
-
-dom:dtd()                                                              *dom:dtd*
-
-
-dom:toXml()                                                          *dom:toXml*
-
-
-xml2lua.handler                                                *xml2lua.handler*
-
-    Fields: ~
-        {parseAttributes}  (boolean)
-
-
-print:starttag({tag}, {s}, {e})                                 *print:starttag*
-    Parses a start tag.
+                                                               *XmlParser:parse*
+XmlParser:parse({xml}, {parseAttributes?})
+    Main function which starts the XML parsing process
 
     Parameters: ~
-        {tag}  ({name:string,attrs:table})  where name is the name of the tag and attrs
-                                            is a table containing the atributtes of the tag
-        {s}    (xml2lua.XmlParser.xmlTag)   position where the tag starts
-        {e}    (xml2lua.XmlParser.xmlTag)   position where the tag ends
-
-
-print:endtag({tag}, {s}, {e})                                     *print:endtag*
-    Parses an end tag.
-
-    Parameters: ~
-        {tag}  ({name:string,attrs:table})  where name is the name of the tag and attrs
-                                            is a table containing the atributtes of the tag
-        {s}    (xml2lua.XmlParser.xmlTag)   position where the tag starts
-        {e}    (xml2lua.XmlParser.xmlTag)   position where the tag ends
-
-
-print:text({s}, {e})                                                *print:text*
-
-    Parameters: ~
-        {s}  (xml2lua.XmlParser.xmlTag)  position where the tag starts
-        {e}  (xml2lua.XmlParser.xmlTag)  position where the tag ends
-
-
-print:cdata({s}, {e})                                              *print:cdata*
-
-    Parameters: ~
-        {s}  (xml2lua.XmlParser.xmlTag)  position where the tag starts
-        {e}  (xml2lua.XmlParser.xmlTag)  position where the tag ends
-
-
-print:comment()                                                  *print:comment*
-
-
-print:dtd()                                                          *print:dtd*
-
-
-print:pi()                                                            *print:pi*
-
-
-print:decl()                                                        *print:decl*
-
-
-tree:new()                                                            *tree:new*
-    Instantiates a new handler object.
-    Each instance can handle a single XML.
-    By using such a constructor, you can parse
-    multiple XML files in the same application.
-
-    Returns: ~
-        (xml2lua.handler)  handler instance
-
-
-tree:reduce()                                                      *tree:reduce*
-
-
-tree:starttag()                                                  *tree:starttag*
-
-
-tree:endtag()                                                      *tree:endtag*
-
-
-tree:text()                                                          *tree:text*
+        {xml}               (string)   the XML string to parse
+        {parseAttributes?}  (boolean)  Indicates if tag attributes should be parsed or not
+                                       If omitted, the default value is true
 
 
 vim:tw=78:ts=8:noet:ft=help:norl:
