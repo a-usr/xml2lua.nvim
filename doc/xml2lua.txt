@@ -1,0 +1,109 @@
+xml2lua.parser()                                                *xml2lua.parser*
+
+
+xml2lua.printable()                                          *xml2lua.printable*
+
+
+xml2lua.toString()                                            *xml2lua.toString*
+
+
+xml2lua.loadFile()                                            *xml2lua.loadFile*
+
+
+xml2lua.getSpaces()                                          *xml2lua.getSpaces*
+
+
+xml2lua.addTagValueAttr()                              *xml2lua.addTagValueAttr*
+
+
+xml2lua.startTag()                                            *xml2lua.startTag*
+
+
+xml2lua.endTag()                                                *xml2lua.endTag*
+
+
+xml2lua.isChildArray()                                    *xml2lua.isChildArray*
+
+
+xml2lua.isTableEmpty()                                    *xml2lua.isTableEmpty*
+
+
+xml2lua.parseTableToXml()                              *xml2lua.parseTableToXml*
+
+
+xml2lua.toXml()                                                  *xml2lua.toXml*
+
+
+XmlParser.new()                                                  *XmlParser.new*
+
+
+XmlParser:parse()                                              *XmlParser:parse*
+
+
+dom:new()                                                              *dom:new*
+
+
+dom:starttag()                                                    *dom:starttag*
+
+
+dom:endtag()                                                        *dom:endtag*
+
+
+dom:text()                                                            *dom:text*
+
+
+dom:comment()                                                      *dom:comment*
+
+
+dom:pi()                                                                *dom:pi*
+
+
+dom:decl()                                                            *dom:decl*
+
+
+dom:dtd()                                                              *dom:dtd*
+
+
+dom:toXml()                                                          *dom:toXml*
+
+
+print:starttag()                                                *print:starttag*
+
+
+print:endtag()                                                    *print:endtag*
+
+
+print:text()                                                        *print:text*
+
+
+print:cdata()                                                      *print:cdata*
+
+
+print:comment()                                                  *print:comment*
+
+
+print:dtd()                                                          *print:dtd*
+
+
+print:pi()                                                            *print:pi*
+
+
+print:decl()                                                        *print:decl*
+
+
+tree:new()                                                            *tree:new*
+
+
+tree:reduce()                                                      *tree:reduce*
+
+
+tree:starttag()                                                  *tree:starttag*
+
+
+tree:endtag()                                                      *tree:endtag*
+
+
+tree:text()                                                          *tree:text*
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:
