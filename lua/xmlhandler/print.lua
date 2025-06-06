@@ -15,11 +15,11 @@
 local print = {}
 
 ---Parses a start tag.
---- @param tag {name: string, attrs: table}
---- where name is the name of the tag and attrs
---- is a table containing the atributtes of the tag
---- @param s xml2lua.XmlParser.xmlTag position where the tag starts
---- @param e xml2lua.XmlParser.xmlTag position where the tag ends
+---@param tag {name: string, attrs: table}
+---where name is the name of the tag and attrs
+---is a table containing the atributtes of the tag
+---@param s xml2lua.XmlParser.xmlTag position where the tag starts
+---@param e xml2lua.XmlParser.xmlTag position where the tag ends
 function print:starttag(tag, s, e)
 	io.write("Start    : " .. tag.name .. "\n")
 	if tag.attrs then
@@ -30,29 +30,29 @@ function print:starttag(tag, s, e)
 end
 
 ---Parses an end tag.
---- @param tag {name: string, attrs: table}
---- where name is the name of the tag and attrs
---- is a table containing the atributtes of the tag
---- @param s xml2lua.XmlParser.xmlTag position where the tag starts
---- @param e xml2lua.XmlParser.xmlTag position where the tag ends
+---@param tag {name: string, attrs: table}
+---where name is the name of the tag and attrs
+---is a table containing the atributtes of the tag
+---@param s xml2lua.XmlParser.xmlTag position where the tag starts
+---@param e xml2lua.XmlParser.xmlTag position where the tag ends
 function print:endtag(tag, s, e)
 	io.write("End      : " .. tag.name .. "\n")
 end
 
 ---Parses a tag content.
---- @param text string text to process
---- @param next function? ?
---- @param s xml2lua.XmlParser.xmlTag position where the tag starts
---- @param e xml2lua.XmlParser.xmlTag position where the tag ends
+---@param text string text to process
+---@param next function? ?
+---@param s xml2lua.XmlParser.xmlTag position where the tag starts
+---@param e xml2lua.XmlParser.xmlTag position where the tag ends
 function print:text(text, next, s, e)
 	io.write("Text     : " .. text .. "\n")
 end
 
 ---Parses CDATA tag content.
---- @param text string CDATA content to be processed
---- @param next function? ?
---- @param s xml2lua.XmlParser.xmlTag position where the tag starts
---- @param e xml2lua.XmlParser.xmlTag position where the tag ends
+---@param text string CDATA content to be processed
+---@param next function? ?
+---@param s xml2lua.XmlParser.xmlTag position where the tag starts
+---@param e xml2lua.XmlParser.xmlTag position where the tag ends
 function print:cdata(text, next, s, e)
 	io.write("CDATA    : " .. text .. "\n")
 end
@@ -81,7 +81,7 @@ function print:dtd(tag, s, e)
 	end
 end
 
---- Parse a XML processing instructions (PI) tag.
+---Parse a XML processing instructions (PI) tag.
 -- @param tag a {name, attrs} table
 -- where name is the name of the tag and attrs
 -- is a table containing the atributtes of the tag

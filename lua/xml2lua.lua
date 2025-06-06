@@ -1,51 +1,52 @@
---- @mod mod.intro Introduction
---- @brief [[Module providing a non-validating XML stream parser in Lua.
+---@mod mod.intro Introduction
+---@brief [[
+--- Module providing a non-validating XML stream parser in Lua.
 ---
----  Features:
----  =========
+--- Features:
+--- =========
 ---
----      * Tokenises well-formed XML (relatively robustly)
----      * Flexible handler based event API (see below)
----      * Parses all XML Infoset elements - ie.
----          - Tags
----          - Text
----          - Comments
----          - CDATA
----          - XML Decl
----          - Processing Instructions
----          - DOCTYPE declarations
----      * Provides limited well-formedness checking
----        (checks for basic syntax & balanced tags only)
----      * Flexible whitespace handling (selectable)
----      * Entity Handling (selectable)
+---     * Tokenises well-formed XML (relatively robustly)
+---     * Flexible handler based event API (see below)
+---     * Parses all XML Infoset elements - ie.
+---         - Tags
+---         - Text
+---         - Comments
+---         - CDATA
+---         - XML Decl
+---         - Processing Instructions
+---         - DOCTYPE declarations
+---     * Provides limited well-formedness checking
+---       (checks for basic syntax & balanced tags only)
+---     * Flexible whitespace handling (selectable)
+---     * Entity Handling (selectable)
 ---
----  Limitations:
----  ============
+--- Limitations:
+--- ============
 ---
----      * Non-validating
----      * No charset handling
----      * No namespace support
----      * Shallow well-formedness checking only (fails
----        to detect most semantic errors)
+---     * Non-validating
+---     * No charset handling
+---     * No namespace support
+---     * Shallow well-formedness checking only (fails
+---       to detect most semantic errors)
 ---
----  API:
----  ====
+--- API:
+--- ====
 ---
----  The parser provides a partially object-oriented API with
----  functionality split into tokeniser and handler components.
+--- The parser provides a partially object-oriented API with
+--- functionality split into tokeniser and handler components.
 ---
----  The handler instance is passed to the tokeniser and receives
----  callbacks for each XML element processed (if a suitable handler
----  function is defined). The API is conceptually similar to the
----  SAX API but implemented differently.
+--- The handler instance is passed to the tokeniser and receives
+--- callbacks for each XML element processed (if a suitable handler
+--- function is defined). The API is conceptually similar to the
+--- SAX API but implemented differently.
 ---
----  XML data is passed to the parser instance through the 'parse'
----  method (Note: must be passed a single string currently)
+--- XML data is passed to the parser instance through the 'parse'
+--- method (Note: must be passed a single string currently)
 ---
----  License:
----  ========
+--- License:
+--- ========
 ---
----      This code is freely distributable under the terms of the [MIT license](LICENSE).
+---     This code is freely distributable under the terms of the [MIT license](LICENSE).
 ---
 ---
 ---@author Paul Chakravarti (paulc@passtheaardvark.com)
@@ -56,7 +57,7 @@ local XmlParser = require("XmlParser")
 
 ---Recursivelly prints a table in an easy-to-ready format
 ---@param tb table The table to be printed
----@param level integer the indentation level to start with
+---@param level? integer the indentation level to start with
 local function printableInternal(tb, level)
 	if tb == nil then
 		return
@@ -77,8 +78,8 @@ end
 ---Instantiates a XmlParser object to parse a XML string
 ---@param handler table Handler module to be used to convert the XML string
 ---to another formats. See the available handlers at the handler directory.
---- Usually you get an instance to a handler module using, for instance:
---- local handler = require("xmlhandler/tree").
+---Usually you get an instance to a handler module using, for instance:
+---local handler = require("xmlhandler/tree").
 ---@return xml2lua.XmlParser a XmlParser object used to parse the XML
 ---@see XmlParser
 function xml2lua.parser(handler)
@@ -99,15 +100,15 @@ function xml2lua.parser(handler)
 end
 
 ---Recursivelly prints a table in an easy-to-ready format
---@param tb The table to be printed
+---@param tb table The table to be printed
 function xml2lua.printable(tb)
 	printableInternal(tb)
 end
 
 ---Handler to generate a string prepresentation of a table
---Convenience function for printHandler (Does not support recursive tables).
---@param t Table to be parsed
---@return a string representation of the table
+---Convenience function for printHandler (Does not support recursive tables).
+---@param t table Table to be parsed
+---@return string a string representation of the table
 function xml2lua.toString(t)
 	local sep = ""
 	local res = ""
@@ -127,9 +128,9 @@ function xml2lua.toString(t)
 	return res
 end
 
---- Loads an XML file from a specified path
--- @param xmlFilePath the path for the XML file to load
--- @return the XML loaded file content
+---Loads an XML file from a specified path
+---@param xmlFilePath string the path for the XML file to load
+---@return string the XML loaded file content
 function xml2lua.loadFile(xmlFilePath)
 	local f, e = io.open(xmlFilePath, "r")
 	if f then
@@ -143,11 +144,11 @@ function xml2lua.loadFile(xmlFilePath)
 end
 
 ---Gets an _attr element from a table that represents the attributes of an XML tag,
---and generates a XML String representing the attibutes to be inserted
---into the openning tag of the XML
---
---@param attrTable table from where the _attr field will be got
---@return a XML String representation of the tag attributes
+---and generates a XML String representing the attibutes to be inserted
+---into the openning tag of the XML
+---
+---@param attrTable table Table from where the _attr field will be got
+---@return string a XML String representation of the tag attributes
 local function attrToXml(attrTable)
 	local s = ""
 	attrTable = attrTable or {}
@@ -263,13 +264,13 @@ function xml2lua.parseTableToXml(obj, tagName, level)
 end
 
 ---Converts a Lua table to a XML String representation.
---@param tb Table to be converted to XML
---@param tableName Name of the table variable given to this function,
---                 to be used as the root tag. If a value is not provided
---                 no root tag will be created.
---@param level Only used internally, when the function is called recursively to print indentation
---
---@return a String representing the table content in XML
+---@param tb table Table to be converted to XML
+---@param tableName string Name of the table variable given to this function,
+---                 to be used as the root tag. If a value is not provided
+---                 no root tag will be created.
+---@param level integer? Only used internally, when the function is called recursively to print indentation
+---
+---@return string a String representing the table content in XML
 function xml2lua.toXml(tb, tableName, level)
 	xml2lua.xmltb = {}
 	level = level or 0

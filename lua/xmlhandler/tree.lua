@@ -8,7 +8,7 @@ local function init()
 	return obj
 end
 
---- @module XML Tree Handler.
+---@module XML Tree Handler.
 -- Generates a lua table from an XML content string.
 -- It is a simplified handler which attempts
 -- to generate a more 'natural' table based structure which
@@ -58,10 +58,10 @@ end
 local tree = init()
 
 ---Instantiates a new handler object.
---- Each instance can handle a single XML.
---- By using such a constructor, you can parse
---- multiple XML files in the same application.
---- @return xml2lua.handler the handler instance
+---Each instance can handle a single XML.
+---By using such a constructor, you can parse
+---multiple XML files in the same application.
+---@return xml2lua.handler the handler instance
 function tree:new()
 	local obj = init()
 
@@ -71,7 +71,7 @@ function tree:new()
 	return obj
 end
 
---- Recursively removes redundant vectors for nodes
+---Recursively removes redundant vectors for nodes
 -- with single child elements
 function tree:reduce(node, key, parent)
 	for k, v in pairs(node) do
@@ -84,7 +84,7 @@ function tree:reduce(node, key, parent)
 	end
 end
 
---- If an object is not an array,
+---If an object is not an array,
 -- creates an empty array and insert that object as the 1st element.
 --
 -- It's a workaround for duplicated XML tags outside an inner tag. Check issue #55 for details.

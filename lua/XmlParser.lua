@@ -1,7 +1,7 @@
---- Converts the decimal code of a character to its corresponding char
---- if it's a graphical char, otherwise, returns the HTML ISO code
---- for that decimal value in the format &#code
---- @param code integer the decimal value to convert to its respective character
+---Converts the decimal code of a character to its corresponding char
+---if it's a graphical char, otherwise, returns the HTML ISO code
+---for that decimal value in the format &#code
+---@param code integer the decimal value to convert to its respective character
 local function decimalToHtmlChar(code)
 	local num = tonumber(code)
 	if num >= 0 and num < 256 then
@@ -97,14 +97,14 @@ local XmlParser = {
 	},
 }
 
---- Instantiates a XmlParser object.
---- @param _handler xml2lua.handler Handler module to be used to convert the XML string
----                to another formats. See the available handlers at the handler directory.
----                Usually you get an instance to a handler module using, for instance:
----                local handler = require("xmlhandler/tree").
---- @param _options {} Options for this XmlParser instance.
---- @return xml2lua.XmlParser
---- @see XmlParser.options
+---Instantiates a XmlParser object.
+---@param _handler xml2lua.handler Handler module to be used to convert the XML string
+---               to another formats. See the available handlers at the handler directory.
+---               Usually you get an instance to a handler module using, for instance:
+---               local handler = require("xmlhandler/tree").
+---@param _options {} Options for this XmlParser instance.
+---@return xml2lua.XmlParser
+---@see XmlParser.options
 function XmlParser.new(_handler, _options)
 	local obj = {
 		handler = _handler,
@@ -118,9 +118,9 @@ function XmlParser.new(_handler, _options)
 end
 
 ---Checks if a function/field exists in a table or in its metatable
---- @param table table the table to check if it has a given function
---- @param elementName string the name of the function/field to check if exists
---- @return boolean true if the function/field exists, false otherwise
+---@param table table the table to check if it has a given function
+---@param elementName string the name of the function/field to check if exists
+---@return boolean true if the function/field exists, false otherwise
 local function fexists(table, elementName)
 	if table == nil then
 		return false
@@ -133,19 +133,19 @@ local function fexists(table, elementName)
 	end
 end
 
---- @param self xml2lua.XmlParser
---- @param errMsg any
---- @param pos any
+---@param self xml2lua.XmlParser
+---@param errMsg any
+---@param pos any
 local function err(self, errMsg, pos)
 	if self.options.errorHandler then
 		self.options.errorHandler(errMsg, pos)
 	end
 end
 
---- Removes whitespaces
---- @param self xml2lua.XmlParser
---- @param s string
---- @return string
+---Removes whitespaces
+---@param self xml2lua.XmlParser
+---@param s string
+---@return string
 local function stripWS(self, s)
 	if self.options.stripWS then
 		s = string.gsub(s, "^%s+", "")
@@ -154,8 +154,8 @@ local function stripWS(self, s)
 	return s
 end
 
---- @param self xml2lua.XmlParser
---- @param s string
+---@param self xml2lua.XmlParser
+---@param s string
 local function parseEntities(self, s)
 	if self.options.expandEntities then
 		for k, v in pairs(self._ENTITIES) do
@@ -166,12 +166,12 @@ local function parseEntities(self, s)
 	return s
 end
 
---- Parses a string representing a tag.
---- @param self xml2lua.XmlParser
---- @param s string String containing tag text
---- @return {name: string, attrs: table} table
---- where name is the name of the tag and attrs
---- is a table containing the attributes of the tag
+---Parses a string representing a tag.
+---@param self xml2lua.XmlParser
+---@param s string String containing tag text
+---@return {name: string, attrs: table} table
+---where name is the name of the tag and attrs
+---is a table containing the attributes of the tag
 local function parseTag(self, s)
 	local tag = {
 		name = string.gsub(s, self._TAG, "%1"),
@@ -195,9 +195,9 @@ local function parseTag(self, s)
 	return tag
 end
 
---- @param self xml2lua.XmlParser
---- @param xml string The xml
---- @param f xml2lua.XmlParser.xmlTag
+---@param self xml2lua.XmlParser
+---@param xml string The xml
+---@param f xml2lua.XmlParser.xmlTag
 local function parseXmlDeclaration(self, xml, f)
 	-- XML Declaration
 	f.match, f.endMatch, f.text = string.find(xml, self._PI, f.pos)
@@ -224,9 +224,9 @@ local function parseXmlDeclaration(self, xml, f)
 	return tag
 end
 
---- @param self xml2lua.XmlParser
---- @param xml string
---- @param f xml2lua.XmlParser.xmlTag
+---@param self xml2lua.XmlParser
+---@param xml string
+---@param f xml2lua.XmlParser.xmlTag
 local function parseXmlProcessingInstruction(self, xml, f)
 	local tag = {}
 
@@ -252,9 +252,9 @@ local function parseXmlProcessingInstruction(self, xml, f)
 	return tag
 end
 
---- @param self xml2lua.XmlParser
---- @param xml string
---- @param f xml2lua.XmlParser.xmlTag
+---@param self xml2lua.XmlParser
+---@param xml string
+---@param f xml2lua.XmlParser.xmlTag
 local function parseComment(self, xml, f)
 	f.match, f.endMatch, f.text = string.find(xml, self._COMMENT, f.pos)
 	if not f.match then
@@ -267,7 +267,7 @@ local function parseComment(self, xml, f)
 	end
 end
 
---- @param self xml2lua.XmlParser
+---@param self xml2lua.XmlParser
 local function _parseDtd(self, xml, pos)
 	-- match,endMatch,root,type,name,uri,internal
 	local dtdPatterns = { self._DTD1, self._DTD2, self._DTD3, self._DTD4, self._DTD5, self._DTD6 }
@@ -282,9 +282,9 @@ local function _parseDtd(self, xml, pos)
 	return nil
 end
 
---- @param self xml2lua.XmlParser
---- @param xml string
---- @param f xml2lua.XmlParser.xmlTag
+---@param self xml2lua.XmlParser
+---@param xml string
+---@param f xml2lua.XmlParser.xmlTag
 local function parseDtd(self, xml, f)
 	f.match, f.endMatch, _ = _parseDtd(self, xml, f.pos)
 	if not f.match then
@@ -297,9 +297,9 @@ local function parseDtd(self, xml, f)
 	end
 end
 
---- @param self xml2lua.XmlParser
---- @param xml string
---- @param f xml2lua.XmlParser.xmlTag
+---@param self xml2lua.XmlParser
+---@param xml string
+---@param f xml2lua.XmlParser.xmlTag
 local function parseCdata(self, xml, f)
 	f.match, f.endMatch, f.text = string.find(xml, self._CDATA, f.pos)
 	if not f.match then
@@ -311,12 +311,12 @@ local function parseCdata(self, xml, f)
 	end
 end
 
---- Parse a Normal tag
+---Parse a Normal tag
 -- Need check for embedded '>' in attribute value and extend
 -- match recursively if necessary eg. <tag attr="123>456">
---- @param self xml2lua.XmlParser
---- @param xml string
---- @param f xml2lua.XmlParser.xmlTag
+---@param self xml2lua.XmlParser
+---@param xml string
+---@param f xml2lua.XmlParser.xmlTag
 local function parseNormalTag(self, xml, f)
 	--Check for errors
 	while 1 do
@@ -373,9 +373,9 @@ local function parseNormalTag(self, xml, f)
 	return tag
 end
 
---- @param self xml2lua.XmlParser
---- @param xml string
---- @param f xml2lua.XmlParser.xmlTag
+---@param self xml2lua.XmlParser
+---@param xml string
+---@param f xml2lua.XmlParser.xmlTag
 local function parseTagType(self, xml, f)
 	-- Test for tag type
 	if string.find(string.sub(f.tagstr, 1, 5), "?xml%s") then
@@ -393,11 +393,11 @@ local function parseTagType(self, xml, f)
 	end
 end
 
---- Get next tag (first pass - fix exceptions below).
---- @param self xml2lua.XmlParser
---- @param xml string
---- @param f xml2lua.XmlParser.xmlTag
---- @return boolean true if the next tag could be got, false otherwise
+---Get next tag (first pass - fix exceptions below).
+---@param self xml2lua.XmlParser
+---@param xml string
+---@param f xml2lua.XmlParser.xmlTag
+---@return boolean true if the next tag could be got, false otherwise
 local function getNextTag(self, xml, f)
 	f.match, f.endMatch, f.text, f.endt1, f.tagstr, f.endt2 = string.find(xml, self._XML, f.pos)
 	if not f.match then
@@ -421,10 +421,10 @@ local function getNextTag(self, xml, f)
 	return f.endMatch ~= nil
 end
 
---- Main function which starts the XML parsing process
---- @param xml string the XML string to parse
---- @param parseAttributes boolean? indicates if tag attributes should be parsed or not.
----        If omitted, the default value is true.
+---Main function which starts the XML parsing process
+---@param xml string the XML string to parse
+---@param parseAttributes boolean? indicates if tag attributes should be parsed or not.
+---       If omitted, the default value is true.
 function XmlParser:parse(xml, parseAttributes)
 	if type(self) ~= "table" or getmetatable(self) ~= XmlParser then
 		error("You must call xmlparser:parse(parameters) instead of xmlparser.parse(parameters)")
