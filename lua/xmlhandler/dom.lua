@@ -6,7 +6,7 @@ local function init()
 	}
 end
 
---- @module Handler to generate a DOM-like node tree structure with
+---@module Handler to generate a DOM-like node tree structure with
 --      a single ROOT node parent - each node is a table comprising
 --      the fields below.
 --
@@ -38,10 +38,10 @@ end
 local dom = init()
 
 ---Instantiates a new handler object.
---- Each instance can handle a single XML.
---- By using such a constructor, you can parse
---- multiple XML files in the same application.
---- @return xml2lua.handler the handler instance
+---Each instance can handle a single XML.
+---By using such a constructor, you can parse
+---multiple XML files in the same application.
+---@return xml2lua.handler the handler instance
 function dom:new()
 	local obj = init()
 
@@ -116,7 +116,7 @@ function dom:comment(text)
 	end
 end
 
---- Parses a XML processing instruction (PI) tag
+---Parses a XML processing instruction (PI) tag
 -- @param tag a {name, attrs} table
 -- where name is the name of the tag and attrs
 -- is a table containing the attributes of the tag
@@ -147,7 +147,7 @@ function dom:dtd(tag)
 	end
 end
 
---- XML escape characters for a TEXT node.
+---XML escape characters for a TEXT node.
 -- @param s a string
 -- @return @p s XML escaped.
 local function xmlEscape(s)
@@ -156,7 +156,7 @@ local function xmlEscape(s)
 	return string.gsub(s, ">", "&gt;")
 end
 
---- return a string of XML attributes
+---return a string of XML attributes
 -- @param tab table with XML attribute pairs. key and value are supposed to be strings.
 -- @return a string.
 local function attrsToStr(tab)
@@ -185,7 +185,7 @@ local function attrsToStr(tab)
 	return "BUG:unknown type:" .. type(tab)
 end
 
---- return a XML formatted string of @p node.
+---return a XML formatted string of @p node.
 -- @param node a Node object (table) of the xml2lua DOM tree structure.
 -- @return a string.
 local function toXmlStr(node, indentLevel)

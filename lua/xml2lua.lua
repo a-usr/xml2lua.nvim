@@ -81,7 +81,7 @@ end
 ---Usually you get an instance to a handler module using, for instance:
 ---local handler = require("xmlhandler/tree").
 ---@return xml2lua.XmlParser a XmlParser object used to parse the XML
----@see XmlParser
+---@see xml2lua.XmlParser
 function xml2lua.parser(handler)
 	if handler == xml2lua then
 		error("You must call xml2lua.parse(handler) instead of xml2lua:parse(handler)")
@@ -266,10 +266,9 @@ end
 ---Converts a Lua table to a XML String representation.
 ---@param tb table Table to be converted to XML
 ---@param tableName string Name of the table variable given to this function,
----                 to be used as the root tag. If a value is not provided
----                 no root tag will be created.
+---to be used as the root tag. If a value is not provided
+---no root tag will be created.
 ---@param level integer? Only used internally, when the function is called recursively to print indentation
----
 ---@return string a String representing the table content in XML
 function xml2lua.toXml(tb, tableName, level)
 	xml2lua.xmltb = {}

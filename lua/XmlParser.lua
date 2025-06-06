@@ -24,10 +24,21 @@ local function hexadecimalToHtmlChar(code)
 	return "&#x" .. code .. ";"
 end
 
+---@class xml2lua.handler
+---@field parseAttributes boolean
+---@field starttag fun(self: xml2lua.handler, tag:{name: string, attrs: table}, s:number, e:number)
+---@field endtag fun(self: xml2lua.handler, tag:{name: string, attrs: table}, s:number, e:number)
+---@field text fun(self: xml2lua.handler, text:string, next?:function, s:number, e:number)
+---@field cdata fun(self: xml2lua.handler, cdata:string, next?:function, s:number, e:number)
+---@field comment fun(self: xml2lua.handler, cdata:string, next?:function, s:number, e:number)
+---@field decl fun(self: xml2lua.handler, tag:{name: string, attrs: table}, s:number, e:number)
+---@field pi fun(self: xml2lua.handler, tag:{name: string, attrs: table}, s:number, e:number)
+---@field dtd fun(self: xml2lua.handler, tag:{name: string, attrs: table}, s:number, e:number)
+
 ---@class xml2lua.XmlParser.options
----@field stripWS boolean?
----@field expandEntities boolean?
----@field errorHandler function?
+---@field stripWS? boolean
+---@field expandEntities? boolean
+---@field errorHandler? function
 
 ---@class xml2lua.XmlParser.xmlTag
 ---@field pos integer
@@ -37,8 +48,8 @@ end
 ---@field errEnd? integer
 ---@field extStart? integer
 ---@field extEnd? integer
----@field endt1? string
----@field endt2? string
+---@field endt1? string EndTag1 ?
+---@field endt2? string EndTag2 ?
 ---@field tagstr? string
 ---@field text? string
 
@@ -98,11 +109,12 @@ local XmlParser = {
 }
 
 ---Instantiates a XmlParser object.
----@param _handler xml2lua.handler Handler module to be used to convert the XML string
----               to another formats. See the available handlers at the handler directory.
----               Usually you get an instance to a handler module using, for instance:
----               local handler = require("xmlhandler/tree").
----@param _options {} Options for this XmlParser instance.
+---@param _handler xml2lua.handler
+---Handler module to be used to convert the XML string
+---to another formats. See the available handlers at the handler directory.
+---Usually you get an instance to a handler module using, for instance:
+---local handler = require("xmlhandler/tree").
+---@param _options xml2lua.XmlParser.options Options for this XmlParser instance.
 ---@return xml2lua.XmlParser
 ---@see XmlParser.options
 function XmlParser.new(_handler, _options)
@@ -423,8 +435,8 @@ end
 
 ---Main function which starts the XML parsing process
 ---@param xml string the XML string to parse
----@param parseAttributes boolean? indicates if tag attributes should be parsed or not.
----       If omitted, the default value is true.
+---@param parseAttributes? boolean Indicates if tag attributes should be parsed or not
+---If omitted, the default value is true
 function XmlParser:parse(xml, parseAttributes)
 	if type(self) ~= "table" or getmetatable(self) ~= XmlParser then
 		error("You must call xmlparser:parse(parameters) instead of xmlparser.parse(parameters)")

@@ -10,8 +10,6 @@
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
 
----@class xml2lua.handler
----@field parseAttributes boolean
 local print = {}
 
 ---Parses a start tag.
