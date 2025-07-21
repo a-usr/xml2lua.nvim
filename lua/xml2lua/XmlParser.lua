@@ -113,7 +113,7 @@ local XmlParser = {
 ---Handler module to be used to convert the XML string
 ---to another formats. See the available handlers at the handler directory.
 ---Usually you get an instance to a handler module using, for instance:
----local handler = require("xmlhandler/tree").
+---local handler = require("xml2lua.xmlhandler.tree").
 ---@param _options xml2lua.XmlParser.options Options for this XmlParser instance.
 ---@return xml2lua.XmlParser
 ---@see XmlParser.options
