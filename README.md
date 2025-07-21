@@ -44,7 +44,7 @@ Check the [example1.lua](./examples/example1.lua) for details. </b>
 ```lua
 local xml2lua = require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
-local handler = require("xmlhandler.tree")
+local handler = require("xml2lua.xmlhandler.tree")
 
 local xml = [[
 <people>
